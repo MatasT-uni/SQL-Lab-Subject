@@ -1,0 +1,30 @@
+Query commands with an explanation
+(1: Select all data from "student" Show a list of all IT/ICT students by showing their first name)
+SELECT * FROM student WHERE Curriculum = 'ICT' ORDER BY First_name;
+
+(2: Select all data from "student" Show a list of all students who do not live in New York)
+SELECT * FROM student WHERE City NOT LIKE 'New York';
+
+(3: Show the age of each student)
+SELECT FLOOR(DATEDIFF(NOW(), DOB)/365) AS 'Age' FROM student;
+
+(4: Show students who've grade A)
+SELECT student.Student_ID,student.First_name,registration.Grade
+FROM student INNER JOIN registration on student.Student_ID = registration.Student_ID WHERE registration.Grade = 'A';
+
+(5: Update in registration table connect section and course table data to relate to the table registration update all grade values in registration table where coures_ID = 1458 update all student grade to be "B+")
+UPDATE registration
+INNER JOIN section ON registration.Section_ID = section.Section_ID
+INNER JOIN course ON section.Course_ID = course.Course_ID
+SET Grade = 'B+' WHERE course.Course_ID = 1458;
+
+Query commands without an explanation 
+SELECT * FROM student WHERE Curriculum = 'ICT' ORDER BY First_name;
+SELECT * FROM student WHERE City NOT LIKE 'New York';
+SELECT FLOOR(DATEDIFF(NOW(), DOB)/365) AS 'Age' FROM student;
+SELECT student.Student_ID,student.First_name,registration.Grade
+FROM student INNER JOIN registration on student.Student_ID = registration.Student_ID WHERE registration.Grade = 'A';
+UPDATE registration
+INNER JOIN section ON registration.Section_ID = section.Section_ID
+INNER JOIN course ON section.Course_ID = course.Course_ID
+SET Grade = 'B+' WHERE course.Course_ID = 1458;

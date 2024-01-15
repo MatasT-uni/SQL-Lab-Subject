@@ -1,0 +1,159 @@
+Query commands with an explanation
+(1: Create the database with the name: Lab4assignment)
+CREATE DATABASE Lab4assignment;
+
+(2: Use database Lab4assignment)
+USE Lab4assignment; 
+
+(3: Select the database that we select to use)
+SELECT DATABASE();  
+
+(4: Create Table name "student" with objects inside database "Lab4assignment")
+CREATE TABLE student(
+(Object 1: Sid with bigint(20) values to store and unsigned increment values collect data with positive or zero increment by 1 and be a Primary Key)
+	Student_ID bigint(20) unsigned AUTO_INCREMENT PRIMARY KEY, 
+(Object 2: First_name input character with length 30)
+	First_name varchar(30),
+(Object 3: Last_name input character with length 30)
+	Last_name varchar(30),
+(Object 4: Sex input character with length 30)
+	Sex varchar(6),
+(Object 5: City input character with length 30)
+	City varchar(30),
+(Object 6: Curriculum input character with length 15)
+	Curriculum varchar(15),
+(Object 7: DOB date input character with date)
+	DOB date
+)
+
+(5: Insert INFO of data inside the table "student" database "Labassignment")
+INSERT INTO student (Student_ID, First_name, Last_name, Sex, City, Curriculum, DOB) VALUES
+	(6022040411, 'Adam', 'Phelps', 'Male', 'New York', 'ICT', '2000-07-24'),
+	(6022040412, 'Mark', 'Twain', 'Male', 'Los Angeles', 'ICT', '2002-09-13'),
+	(6022040413, 'Shania', 'Judith', 'Female', 'New York', 'CIVIL', '2001-05-19'),
+	(6022040414, 'Angelina', 'Rosswell', 'Female', 'California', 'MECHANICAL', '2006-07-27'),
+	(6022040415, 'Thomas', 'Hardy', 'Male', 'New York', 'MANAGEMENT', '2006-03-19');
+
+(6: Create another table named "course" with objects and one Primary Key inside table)
+CREATE TABLE course(
+(Object 1: Course_ID stored in int with 11 characters and defined as Primary key)
+	Course_ID int(11) PRIMARY KEY,
+(Object 2: Coures_code input string with length 9)
+	Course_code varchar(9),
+(Object 2: Course_name input string with length 30)
+	Course_name varchar(30),
+(Object 3: Course_no input int with length 11)
+	Course_no int(11)
+)
+
+(7: Insert info into table "course" in database "Lab4assignment")
+INSERT INTO course (Course_ID, Course_code, Course_name, Course_no) VALUES
+	(4576, 'ITS341', 'Programming', 45),
+	(2345, 'GC124', 'Critical Thinking', 24),
+	(1458, 'ME231', 'CAD/CAM', 12);
+
+(8: Create another table named "section" with objects and one Primary Key inside a table)
+CREATE TABLE section(
+(Object 1: Section_ID input int with length 10 unsigned primary key)
+	Section_ID int(10) unsigned PRIMARY KEY,
+(Object 2: Section_no input int with length 11)
+	Section_no int(11),
+(Object 3: Course_ID input int with length 11)
+	Course_ID int(11),
+(Object 4: Year input int with length 11)
+	Year int(11),
+(Object 5: Semester input int with length 11)
+	Semester int(11),
+(defined Course_ID to be foreign key references from table "course" object "Course_ID")
+	CONSTRAINT FK_Course_ID FOREIGN KEY (Course_ID) REFERENCES course(Course_ID)
+)
+
+(9: Insert INFO of data inside the table "section" database "Labassignment")
+INSERT INTO section(Section_ID, Section_no, Course_ID, Year, Semester) VALUES
+	(623, 1, 4576, 2019, 1),
+	(625, 3, 4576, 2019, 1),
+	(354, 2, 2345, 2019, 1),
+	(267, 1, 1458, 2020, 2),
+	(147, 2, 2345, 2020, 2);
+
+(10: Create another table named "registration" with objects and one Primary Key inside a table)
+CREATE TABLE registration(
+(Object 1: Registration_ID with input int length 10 unsigned auto increment by order and defined as primary key)
+	Registration_ID int(10) unsigned AUTO_INCREMENT PRIMARY KEY,
+(Object 2: Student_ID input bigint (int with big values) length 20 unsigned)
+	Student_ID bigint(20) unsigned,
+(Object 3: Sectinon_ID input int length 10 unsigned)
+	Section_ID int(10) unsigned,
+(Object 4: Grade input string with length 2)
+	Grade varchar(2),
+(defined Student_ID to be foreign key references from table "student" object "Student_ID")
+	CONSTRAINT FK_Student_ID FOREIGN KEY (Student_ID) REFERENCES student(Student_ID),
+(defined Section_ID to be foreign key references from table "section" object "Section_ID")
+    	CONSTRAINT FK_Section_ID FOREIGN KEY (Section_ID) REFERENCES section(Section_ID)
+)
+
+(11:  Insert INFO of data inside the table "registration" database "Labassignment")
+INSERT INTO registration(Registration_ID, Student_ID, Section_ID, Grade) VALUES
+	(602, 6022040411, 623, 'A'),
+	(603, 6022040412, 625, 'B'),
+	(604, 6022040413, 354, 'A'),
+	(605, 6022040414, 267, 'C'),
+	(606, 6022040415, 147, 'A');
+
+Query commands without an explanation
+CREATE DATABASE Lab4assignment;
+USE lab4assignment;
+SELECT DATABASE();
+CREATE TABLE student(
+	Student_ID bigint(20) unsigned AUTO_INCREMENT PRIMARY KEY,
+	First_name varchar(30),
+	Last_name varchar(30),
+	Sex varchar(6),
+	City varchar(30),
+	Curriculum varchar(15),
+	DOB date
+);
+INSERT INTO student (Student_ID, First_name, Last_name, Sex, City, Curriculum, DOB) VALUES
+	(6022040411, 'Adam', 'Phelps', 'Male', 'New York', 'ICT', '2000-07-24'),
+	(6022040412, 'Mark', 'Twain', 'Male', 'Los Angeles', 'ICT', '2002-09-13'),
+	(6022040413, 'Shania', 'Judith', 'Female', 'New York', 'CIVIL', '2001-05-19'),
+	(6022040414, 'Angelina', 'Rosswell', 'Female', 'California', 'MECHANICAL', '2006-07-27'),
+	(6022040415, 'Thomas', 'Hardy', 'Male', 'New York', 'MANAGEMENT', '2006-03-19');
+CREATE TABLE course(
+	Course_ID int(11) PRIMARY KEY,
+	Course_code varchar(9),
+	Course_name varchar(30),
+	Course_no int(11)
+);
+INSERT INTO course (Course_ID, Course_code, Course_name, Course_no) VALUES
+	(4576, 'ITS341', 'Programming', 45),
+	(2345, 'GC124', 'Critical Thinking', 24),
+	(1458, 'ME231', 'CAD/CAM', 12);
+CREATE TABLE section(
+	Section_ID int(10) unsigned PRIMARY KEY,
+	Section_no int(11),
+	Course_ID int(11),
+	Year int(11),
+	Semester int(11),
+	CONSTRAINT FK_Course_ID FOREIGN KEY (Course_ID) REFERENCES course(Course_ID)
+);
+INSERT INTO section(Section_ID, Section_no, Course_ID, Year, Semester) VALUES
+	(623, 1, 4576, 2019, 1),
+	(625, 3, 4576, 2019, 1),
+	(354, 2, 2345, 2019, 1),
+	(267, 1, 1458, 2020, 2),
+	(147, 2, 2345, 2020, 2);
+CREATE TABLE registration(
+	Registration_ID int(10) unsigned AUTO_INCREMENT PRIMARY KEY,
+	Student_ID bigint(20) unsigned,
+	Section_ID int(10) unsigned,
+	Grade varchar(2),
+	CONSTRAINT FK_Student_ID FOREIGN KEY (Student_ID) REFERENCES student(Student_ID),
+	CONSTRAINT FK_Section_ID FOREIGN KEY (Section_ID) REFERENCES section(Section_ID)
+);
+INSERT INTO registration(Registration_ID, Student_ID, Section_ID, Grade) VALUES
+	(602, 6022040411, 623, 'A'),
+	(603, 6022040412, 625, 'B'),
+	(604, 6022040413, 354, 'A'),
+	(605, 6022040414, 267, 'C'),
+	(606, 6022040415, 147, 'A');

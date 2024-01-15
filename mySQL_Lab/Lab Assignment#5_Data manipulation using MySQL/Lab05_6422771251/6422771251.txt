@@ -1,0 +1,265 @@
+Comand to connect to MAMP thorugh cmd
+• Direct to ‘cd
+C:\MAMP\bin\mysql\bin’
+• mysql -u root –p & enter
+• Password 
+
+Lab assignment 1:
+Create Database Name:SIIT
+CREATE DATABASE IF NOT EXISTS SIIT;
+Query OK, 1 row affected (0.04 sec)
+
+Use database and select for create table insdie
+mysql> use siit;
+Database changed
+mysql> select database();
+ 
+Create 1st table name department
+CREATE TABLE `department` (
+`dept_code` VARCHAR(20),
+`dept_name` VARCHAR(30),
+PRIMARY KEY (dept_code)
+);
+
+Create 2nd table name instructor
+CREATE TABLE `instructor` (
+`instructor_ID` INT(10),
+`first_name` VARCHAR(20),
+`last_name` VARCHAR(20),
+`dept_code` VARCHAR(20),
+PRIMARY KEY (instructor_ID),
+FOREIGN KEY (dept_code) REFERENCES department(dept_code)
+);
+
+Create 3rd table name student
+CREATE TABLE `student` (
+`student_ID` INT(10),
+`first_name` VARCHAR(20),
+`last_name` VARCHAR(20),
+`dept_code` VARCHAR(20),
+PRIMARY KEY (student_ID),
+FOREIGN KEY (dept_code) REFERENCES department(dept_code)
+);
+
+Create 4th table name salary
+CREATE TABLE `salary` (
+`instructor_ID` INT(10),
+`dept_code` VARCHAR(20),
+`salary` INT(10),
+PRIMARY KEY (instructor_ID),
+FOREIGN KEY (instructor_ID) REFERENCES instructor(instructor_ID),
+FOREIGN KEY (dept_code) REFERENCES department(dept_code)
+);
+
+Create 5th table name course
+create table `course` (
+`course_ID` int(10),
+`title` varchar(20),
+`dept_code` varchar(20),
+`credits` int(10),
+primary key (course_ID),
+foreign key (dept_code) references department(dept_code)
+);
+
+Create 6th table last table name teaches
+create table `teaches` (
+`instructor_ID` int(10),
+`course_ID` int(10),
+`sec_ID` int(10),
+`semester` int(10),
+`year` int(10),
+foreign key (course_ID) references course(course_ID),
+foreign key (instructor_ID) references instructor(instructor_ID)
+);
+
+1.a)
+Insert data into table Department
+insert into department(dept_code,dept_name) values ('CE', 'Civil Engineering'), ('CPE', 'Computer Engineering'), ('MT', 'Management Technology');
+
+Insert data into table Instructor
+insert into instructor(instructor_ID,first_name,last_name,dept_code) values (101, 'Peter', 'Parker', 'CE'), (102, 'Toto', 'Wolfs', 'MT'), (103, 'Lewis', 'Hamilton', 'CPE');
+
+Insert data into table Student
+insert into student(student_ID,first_name,last_name,dept_code) values (201, 'Max', 'Verstappen', 'MT'), (202, 'Frederic', 'Vasseur', 'CPE'), (203, 'Alexander', 'Latifi', 'CE');
+
+Insert data into table Salary
+insert into salary(instructor_ID, dept_code, salary) values (101, 'CE', 2500), (102, 'MT', 200000), (103, 'CPE', 300000);
+
+Insert data into table Course
+insert into course(course_ID, title, dept_code, credits) values (301, 'CVC311', 'CE', 2), (302, 'CSS324', 'CPE', 3), (303, 'EES204', 'MT', 1);
+
+Insert data into table teaches
+insert into teaches(instructor_ID, course_ID, sec_ID, semester, year) values (101, 301, 4, 1, 2023), (102, 303, 4, 1, 2023), (103, 302, 2, 2, 2022); 
+
+Lab assignment 2:
+Create Database Library; //CREATE DATABASE IF NOT EXISTS Library;
+
+Use database and select for create table insdie
+mysql> use library;
+Database changed
+mysql> select database();
+
+Create table name authors
+create table authors (author_id int(11) primary key auto_increment,first_name varchar(50), last_name varchar(50));
+
+Create table name books 
+create table books (book_id int(11) primary key auto_increment, title varchar(255), author_id 
+int(11), ISBN varchar(13), publication_year int(11), foreign key (author_id) references authors(author_id));
+
+Create table name borrowers
+create table borrowers (borrower_id int(11) primary key auto_increment, first_name varchar(50),
+last_name varchar(50), email varchar(50));
+
+Create table name transactions
+create table transactions (transaction_id int(11) primary key auto_increment,   book_id int(11), borrower_id int(11), checkout_date date, return_date date, foreign key
+(book_id) references books(book_id), foreign key (borrower_id) references borrowers
+(borrower_id));
+
+Insert data in table authors
+insert into authors(first_name, last_name) values
+('John', 'Doe'),
+('Jane', 'Smith'),
+('Mark','Johnson'),
+('Jesus', 'God');
+
+Insert data in table books
+insert into books(title, author_id, ISBN, publication_year) values
+('Book1', 1, '1234567890', 2010),
+('Book2', 2, '2345678901', 2015),
+('Book3', 3, '3456789012', 2020),
+('Book4', 4, '1122334455', 2023);
+
+Insert data in table borrowers
+insert into borrowers(first_name, last_name, email) values
+('Alice', 'Johnson', 'alice@example.com'),
+('Bob', 'Smith', 'bob@example.com'),
+('Jesus', 'God', 'Jesus@example.com');
+
+Insert data in table transactions
+insert into transactions(book_id, borrower_id,checkout_date,return_date) values
+(1,1,'2023/9/1','2023/9/27'),
+(2,2,'2023/9/5','2023/9/20'),
+(3,1,'2023/9/10','2023/10/1');
+
+2.a)List all books checked out by ‘Alice Johnson’. Title and author name
+should be listed, author name should be combined with last name
+properly.
+select books.title,concat(authors.first_name," ",authors.last_name) as Author_Name from authors,books,borrowers,transactions where authors.author_id=books.author_id and books.book_id=transactions.book_id and transactions.borrower_id=borrowers.borrower_id and borrowers.first_name='Alice' and borrowers.last_name='Johnson';
+
+2.b)
+select books.title,concat(borrowers.first_name," ",borrowers.last_name) as Borrower_Name,transactions.return_date from books,borrowers,transactions where books.book_id=transactions.book_id and transactions.borrower_id=borrowers.borrower_id and transactions.checkout_date>transactions.return_date;
+
+2.c)
+select concat(authors.first_name," ",authors.last_name) as Author_Name,count(*) as book_checked_out from authors,books,transactions where authors.author_id=books.author_id and books.book_id=transactions.book_id group by transactions.book_id;
+
+2.d)
+select concat(borrowers.first_name," ",borrowers.last_name) as Borrower_name,
+count(*) as books_checked_out from borrowers,transactions where borrowers.borrower_id=tran6sactions.borrower_id group by transactions.borrower_id limit 1;
+
+Lab assignment 3:
+Create Database coffee_shop01;
+use coffee_shop01;
+select database();
+
+Create table products 
+create table products(product_id int primary key auto_increment, name varchar(255), price decimal(10,2));
+
+Create table Customers
+create table customers(customer_id int primary key auto_increment,first_name varchar(50),last_name varchar(50),email varchar(100));
+
+Create table Orders
+create table orders(order_id int primary key auto_increment,customer_id int,order_date date,foreign key (customer_id) references customers(customer_id));
+
+Create table order_items
+create table order_items(item_id int primary key auto_increment,order_id int,product_id int,quantity int,foreign key (order_id) references orders(order_id),foreign key (product_id) references products(product_id));
+
+Insert list into table products
+insert into products(name,price) values ('Espresso',2.5),('Latte',3.5),('Cappuccino',3),('Croissant',2),('Muffin',1.5);
+
+Insert list into table customers
+insert into customers(first_name,last_name,email) values ('Alice','Johnson','alice@example.com'),('Bob','Smith','bob@example.com');
+
+Insert list into table Orders
+insert into orders(customer_id,order_date) values (1,'2023/9/1'),(2,'2023/9/5');
+
+Insert list into table Order_items
+insert into order_items(order_id,product_id,quantity) values (1,1,2),(1,4,1),(2,2,1),(2,5,2);
+
+3.a)
+select orders.order_id,concat(customers.first_name," ",customers.last_name) as customer_name,sum(order_items.quantity*products.price) as price from products,order_items,orders,customers where products.product_id = order_items.product_id and order_items.order_id = orders.order_id and orders.customer_id = customers.customer_id group by order_items.order_id;
+
+3.b)
+select sum(order_items.quantity*products.price) as total_revenue from products,order_items where products.product_id=order_items.product_id;
+
+3.c)
+create view popular_products as select products.name,order_items.quantity as total_quantity_sold from products,order_items where products.product_id=order_items.product_id order by order_items.quantity desc, products.name desc;
+
+select * from popular_products;
+
+3.d)
+select concat(customers.first_name," ",customers.last_name) as customer_name,sum(order_items.quantity*products.price) as total_spent from products,order_items,orders,customers where products.product_id=order_items.product_id and order_items.order_id=orders.order_id and orders.customer_id=customers.customer_id group by order_items.order_id order by sum(order_items.quantity*products.price) desc;
+
+Lab assignment 4:
+Create database & select database
+create database bank;
+use bank;
+select database();
+
+Create table Customers
+create table customers(customer_id int primary key auto_increment,first_name varchar(50),last_name varchar(50),email varchar(100),phone_number varchar(15));
+
+Create table Accounts
+create table accounts(account_id int primary key auto_increment,customer_id int,account_type enum('Checking','Savings','Loan'),balance decimal(10,2),foreign key(customer_id) references customers(customer_id));
+
+Create table Transactions
+create table transactinos(transaction_id int primary key auto_increment,account_id int,transaction_date date,amount decimal(10,2),description varchar(255),foreign key(account_id) references accounts(account_id));
+
+Insert data into table Customers
+insert into customers(first_name, last_name, email, phone_number) values ('Alice', 'Johnson', 'alice@example.com','123-456-7890'), ('Bob', 'Smith', 'bob@example.com','987-654-3210');
+
+Insert data into table Accounts
+insert into accounts(customer_id, account_type, balance) values (1, 'Checking', 5000), (1, 'Savings', 10000), (2, 'Checking', 3000);
+
+Insert data into table Transactions
+insert into transactinos(account_id, transaction_date, amount, description) values (1, '2023/9/1', -1000, 'Withdrawal'), (1, '2023/9/5', 2000, 'Deposit'), (2, '2023/9/2', -500, 'Withdrawal'), (3, '2023/9/7', 1000, 'Deposit');
+
+4.a)
+select concat(customers.first_name," ",customers.last_name) as customer_name,group_concat(accounts.account_type order by accounts.account_type asc separator ', ') as accounts_type,sum(accounts.balance) as total_balance from customers,accounts where customers.customer_id=accounts.customer_id group by accounts.customer_id;
+
+4.b)
+select concat(customers.first_name," ",customers.last_name) as customer_name, sum(accounts.balance) as total_balance from customers,accounts where customers.customer_id=accounts.customer_id group by accounts.customer_id order by sum(accounts.balance) desc limit 3;
+
+Lab assignment 5:
+Create database & select database
+create database search_engine;
+use search_engine;
+select database();
+
+Create table Web_pages
+create table web_pages(page_id int primary key auto_increment,url varchar(255),title varchar(255),content text);
+
+Create table Search_queries
+create table search_queries(query_id int primary key auto_increment,query_text varchar(255),search_date date);
+
+Create table Search_results
+create table search_results(result_id int primary key auto_increment,query_id int,page_id int,rank int,foreign key(query_id) references search_queries(query_id),foreign key(page_id) references web_pages(page_id));
+
+Create unique index on talbe Web_pages
+create unique index url_index on web_pages(url);
+
+Insert data into table Web_pages
+insert into web_pages(url, title, content) values ('http://www.example.com/page1', 'Example Page 1', 'This is the content of page 1.'), ('http://www.example.com/page2', 'Example Page 2', 'This is the content of page 2.'), ('http://www.example.com/page3', 'Example Page 3', 'This is the content of page 3.');
+
+Insert data into table Search_queries
+insert into search_queries(query_text, search_date) values ('MySQL tutorial', '2023/9/1'), ('Search engine', '2023/9/2');
+
+Insert data into table Search_results
+insert into search_results(query_id, page_id, rank) values (1, 1, 1), (1, 2, 2), (2, 2, 1), (2, 3, 2);
+
+5.a)
+update web_pages set content='This is the updated content of page 1.' where page_id=1;
+
+select * from web_pages;
+
+5.b)
+select search_queries.query_text,web_pages.title,web_pages.url,search_results.rank from search_queries,search_results,web_pages where search_queries.query_id=search_results.query_id and search_results.page_id=web_pages.page_id and search_queries.query_id=2 order by search_results.rank;
