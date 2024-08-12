@@ -1,3 +1,13 @@
+Thank you for the screenshot. Based on the image, it looks like the GitHub repository you mentioned contains folders related to different programming languages and technologies, including C#, PHP, HTML, CSS, and MySQL.
+
+Here’s an updated README and short description that better aligns with the content of the repository:
+
+---
+
+### Short Description
+
+**Database Lab** is a collection of practical exercises and projects focused on database management and web development. The lab includes examples and assignments using C#, PHP, HTML, CSS, and MySQL, demonstrating various techniques for creating and managing databases and integrating them with web applications.
+
 ---
 
 ### README
@@ -60,8 +70,14 @@ To work with the files in this repository, you will need:
 - **PHP & HTML & CSS & MySQL_Lab**: Ideal for learning how to build and style dynamic web pages that interact with a database.
 - **mySQL_Lab**: Practice writing and executing SQL queries to manage databases directly.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Contributors
 
 - MatasT-uni - Repository owner and primary contributor.
 
 ---
+
+This README provides a more accurate overview of the content in the repository, reflecting the various technologies and tools used. Let me know if there's anything else you’d like to add or modify!
