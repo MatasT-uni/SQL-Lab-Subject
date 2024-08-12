@@ -1,5 +1,3 @@
----
-
 ### README
 
 # Database Lab
@@ -64,4 +62,3 @@ To work with the files in this repository, you will need:
 
 - MatasT-uni - Repository owner and primary contributor.
 
----
